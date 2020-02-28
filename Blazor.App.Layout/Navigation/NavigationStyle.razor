@@ -1,0 +1,47 @@
+﻿@namespace Blazor.App.Layout
+@inherits StyleComponentBase
+
+<style data-name="Navigation">
+
+    .Navigation-Root {
+    }
+
+    .Navigation-Item {
+        display: flex;
+        padding-top: 0;
+        padding-bottom: 0;
+    }
+
+    .Navigation-Link {
+        display: flex;
+        align-items: center;
+        text-decoration: none;
+        position: relative;
+        justify-content: flex-start;
+        color: inherit;
+        width: 100%;
+        padding: 10px 8px;
+        font-weight: 500;
+        letter-spacing: 0;
+        text-transform: none;
+        justify-content: flex-start;
+    }
+
+    .Navigation-Icon {
+        color: inherit;
+        width: 24px;
+        height: 24px;
+        display: flex;
+        align-items: center;
+        margin-right: 8px;
+    }
+
+    .Navigation-Active {
+        color: var(--theme-palette-primary-main, #1976d2);
+        font-weight: 500;
+    }
+
+        .Navigation-Active .Navigation-Icon {
+            color: var(--theme-palette-primary-main, #1976d2);
+        }
+</style>

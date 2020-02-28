@@ -1,0 +1,141 @@
+﻿@inherits LayoutComponentBase
+@*@inject IJSRuntime JSRuntime*@
+
+<style>
+    .root {
+        display: flex;
+        background-color: var(--theme-palette-grey-background-default, #f5f5f5);
+    }
+
+    .app-bar {
+        transition: margin 195ms cubic-bezier(0.4, 0, 0.6, 1) 0ms,width 195ms cubic-bezier(0.4, 0, 0.6, 1) 0ms;
+    }
+
+    @media (prefers-color-scheme: dark) {
+        .app-bar {
+            color: #fff;
+            background-color: #333;
+        }
+    }
+
+    .app-bar-shift {
+        width: calc(100% - 240px);
+        transition: margin 225ms cubic-bezier(0.0, 0, 0.2, 1) 0ms,width 225ms cubic-bezier(0.0, 0, 0.2, 1) 0ms;
+        margin-left: 240px;
+    }
+
+    main.content {
+        padding: 24px;
+        flex-grow: 1;
+        transition: margin 195ms cubic-bezier(0.4, 0, 0.6, 1) 0ms;
+        margin-left: 0;
+    }
+
+    main.content-shift {
+        transition: margin 225ms cubic-bezier(0.0, 0, 0.2, 1) 0ms;
+        margin-left: 240px;
+    }
+
+    .drawer-header {
+        display: flex;
+        padding: 0px 8px;
+        /*min-height: 56px;*/
+        align-items: center;
+        justify-content: flex-end;
+    }
+</style>
+
+
+<div class="root">
+    <Baseline />
+    <AppBar Position="@AppBarPosition.Fixed" Class="@AppBarClass">
+        <Toolbar>
+            <IconButton Color="@Color.Inherit"
+                        aria-label="open drawer"
+                        OnClick="@OnOpen"
+                        Edge="@IconButtonEdge.Start"
+                        Style="@IconStyle">
+                <MenuIcon />
+            </IconButton>
+            <Typography Variant="@TypographyVariant.H6" NoWrap>
+                Skclusive Material Components
+            </Typography>
+        </Toolbar>
+    </AppBar>
+    <Sidebar1 Open="@Open" OnClose="@OnClose" />
+    <main class="@MainClass">
+        <div class="Toolbar-Regular drawer-header" />
+        @Body
+    </main>
+
+    @*@if (Installable)
+    {
+        <div class="row justify-content-center">
+            <div class="install-prompt col-sm-8 col-sm-offset-2 col-lg-6 col-lg-offset-3">
+                <span>Install app?</span>
+                <button class="installButton btn btn-primary" @onclick="@(() => InstallClicked())">Yes</button>
+                <button class="cancelButton btn btn-danger" @onclick="@(()=>Installable=false)">No</button>
+            </div>
+        </div>
+    }*@
+</div>
+
+
+@code
+{
+    static bool Installable = false;
+    static Action OnInstallable;
+
+    private string media = "@media";
+
+    private bool Open { set; get; } = true;
+
+    private string IconStyle => "margin-right: 16px;" + (Open ? " display: none;" : "");
+
+    private string MainClass => "content" + (Open ? " content-shift" : "");
+
+    private string AppBarClass => "app-bar" + (Open ? " app-bar-shift" : "");
+
+    private string Text => (Open ? "Close" : "Open") + " Drawer";
+
+
+    //protected override void OnInitialized()
+    //{
+    //    OnInstallable = () => InvokeAsync(StateHasChanged);
+    //}
+
+    //[JSInvokable]
+    //public static Task PWAInstallable()
+    //{
+    //    Installable = true;
+    //    OnInstallable.Invoke();
+    //    return Task.CompletedTask;
+    //}
+
+    //ValueTask InstallClicked()
+    //{
+    //    Installable = false;
+    //    return JSRuntime.InvokeVoidAsync("BlazorPWA.installPWA");
+    //}
+
+    private void OnClose()
+    {
+        Open = false;
+
+        StateHasChanged();
+    }
+
+    private void OnOpen()
+    {
+        Open = true;
+
+        StateHasChanged();
+    }
+
+    private void OnToggle()
+    {
+        Open = !Open;
+
+        StateHasChanged();
+    }
+}

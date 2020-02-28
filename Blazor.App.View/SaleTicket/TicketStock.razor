@@ -1,0 +1,45 @@
+﻿<AppBar Position="@AppBarPosition.Static">
+    <Tabs Value="@Value"
+          OnChange="@HandleChange"
+          aria-label="simple tabs example">
+        <Tab 
+             Label="散客售票"
+             Value="0"/>
+        <Tab 
+             Label="团队售票"
+             Value="1"/>
+        <Tab 
+             Label="协议售票"
+             Value="2" />
+    </Tabs>
+</AppBar>
+
+@if (object.Equals(Value, 0))
+{
+    <SearchResults Component="div">
+        Item One
+    </SearchResults>
+}
+else if (object.Equals(Value, 1))
+{
+    <SearchResults Component="div">
+        Item Two
+    </SearchResults>
+}
+else if (object.Equals(Value, 2))
+{
+    <SearchResults Component="div">
+        Item Three
+    </SearchResults>
+}
+
+@code {
+    private object Value { set; get; } = 0;
+
+    private void HandleChange(object value)
+    {
+        Value = value;
+
+        StateHasChanged();
+    }
+}

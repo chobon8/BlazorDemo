@@ -1,0 +1,16 @@
+﻿<Card>
+    <Grid Container>
+        @foreach (var item in OrderData.GetOrders())
+        {
+            <Grid Item ExtraSmall="@GridSize.True">
+                <SearchResult/>
+            </Grid>
+        }
+    </Grid>
+</Card>
+    
+
+
+@code {
+
+}

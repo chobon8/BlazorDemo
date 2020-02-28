@@ -1,0 +1,17 @@
+﻿<MainResources />
+
+<Router 
+    AppAssembly="@typeof(FullLayout).Assembly">
+    <Found 
+        Context="routeData">
+        <RouteView 
+            RouteData="@routeData" 
+            DefaultLayout="@typeof(FullLayout)" />
+    </Found>
+    <NotFound>
+        <LayoutView 
+            Layout="@typeof(SmallLayout)">
+            <p>该插件地址未配置！</p>
+        </LayoutView>
+    </NotFound>
+</Router>
